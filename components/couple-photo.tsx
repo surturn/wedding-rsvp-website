@@ -163,7 +163,7 @@ export function HeroCouplePhoto() {
           ) : (
             <Image
               src="/images/couple.jpg"
-              alt="Manu and Anne — a love story written by God"
+              alt="Manuh and Anne — a love story written by God"
               fill
               className="object-cover object-top"
               priority
@@ -220,7 +220,7 @@ export function AboutCouplePhoto() {
           ) : (
             <Image
               src="/images/couple.jpg"
-              alt="Manu and Anne in Zambia"
+              alt="Manuh and Anne in Zambia"
               fill
               className="object-cover object-top"
               onError={() => setImgError(true)}

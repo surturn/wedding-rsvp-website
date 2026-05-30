@@ -110,7 +110,7 @@ export default function HomePage() {
               <div className="flex items-center justify-center gap-2 sm:gap-3">
                 <HeartHandsIcon className="w-6 h-6 text-terracotta/60" />
                 <h1 className="font-serif text-5xl sm:text-6xl text-brown tracking-wide">
-                  Manu
+                  Manuh
                 </h1>
               </div>
               
@@ -147,7 +147,7 @@ export default function HomePage() {
                 September 5, 2026
               </p>
               <p className="text-muted-foreground mt-2 text-sm sm:text-base">
-                Grace Community Church &bull; Nashville, TN
+                CITAM Nakuru &bull; Nakuru, Kenya
               </p>
             </motion.div>
 
@@ -199,7 +199,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center gap-6 mb-2">
                   <HeartHandsIcon className="w-12 h-12 text-terracotta/60" />
                   <h1 className="font-serif text-8xl lg:text-9xl text-brown tracking-wide">
-                    Manu
+                    Manuh
                   </h1>
                 </div>
                 
@@ -242,7 +242,7 @@ export default function HomePage() {
                 September 5, 2026
               </p>
               <p className="text-muted-foreground mt-3 text-lg">
-                Grace Community Church &bull; Nashville, Tennessee
+                CITAM Nakuru &bull; Nakuru, Kenya
               </p>
             </motion.div>
 
@@ -341,7 +341,7 @@ export default function HomePage() {
               </motion.p>
 
               <motion.p variants={fadeInUp} transition={{ duration: 0.8 }}>
-                When Manu left for a month-long mission trip to Zambia, Anne was the only person 
+                When Manuh left for a month-long mission trip to Zambia, Anne was the only person 
                 outside his family who checked in on him — every single day. Through prayers and 
                 messages across continents, their friendship grew into something deeper.
               </motion.p>
@@ -361,7 +361,7 @@ export default function HomePage() {
               </motion.div>
 
               <motion.p variants={fadeInUp} transition={{ duration: 0.8 }}>
-                Today, Manu and Anne serve together as missionaries, sharing the love of Christ 
+                Today, Manuh and Anne serve together as missionaries, sharing the love of Christ 
                 through both words and signs — reaching hearts that hear and hands that speak.
               </motion.p>
             </div>

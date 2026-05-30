@@ -270,7 +270,7 @@ export default function AdminPage() {
             <HandSignIcon className="w-8 h-8 text-terracotta" />
             <div>
               <h1 className="font-serif text-3xl md:text-4xl text-brown">Admin Dashboard</h1>
-              <p className="text-muted-foreground text-sm">Manu & Anne&apos;s Wedding RSVPs</p>
+              <p className="text-muted-foreground text-sm">Manuh & Anne&apos;s Wedding RSVPs</p>
             </div>
           </div>
           <button

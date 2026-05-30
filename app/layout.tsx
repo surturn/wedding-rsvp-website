@@ -21,10 +21,10 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://manuandanne.love'),
-  title: 'Manu & Anne | Wedding Celebration',
+  title: 'Manuh & Anne | Wedding Celebration',
   description: 'Join us in celebrating the union of Manuscripts and Anne James. Two hearts, one love, speaking in words and signs.',
   openGraph: {
-    title: 'Manu & Anne | Wedding Celebration',
+    title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
     type: 'website',
     images: [
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
         url: '/images/couple.jpg',
         width: 800,
         height: 800,
-        alt: 'Manu & Anne — A love story written by God',
+        alt: 'Manuh & Anne — A love story written by God',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Manu & Anne | Wedding Celebration',
+    title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
     images: ['/images/couple.jpg'],
   },

@@ -20,7 +20,7 @@ export function Footer() {
           </span>
         </div>
         <p className="font-serif text-xl tracking-wide mb-2">
-          Manu &amp; Anne &middot; 2025
+          Manuh &amp; Anne &middot; 2025
         </p>
         <p className="text-warm-white/60 text-sm italic">
           A love story written by God

@@ -5,6 +5,7 @@ import { MapPin, Clock, Calendar, HelpCircle, Church, PartyPopper } from 'lucide
 import { HandSignIcon } from '@/components/hand-sign-icon'
 import { SimpleLeaf } from '@/components/leaf-decoration'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function DetailsPage() {
   const prefersReducedMotion = useReducedMotion()
@@ -112,11 +113,10 @@ export default function DetailsPage() {
             <div className="flex items-start gap-4">
               <MapPin className="w-5 h-5 text-sage mt-1 shrink-0" />
               <div>
-                <p className="font-medium text-brown">Grace Community Church</p>
-                <p className="text-brown/70">1234 Faith Avenue</p>
-                <p className="text-brown/70">Nashville, TN 37203</p>
+                <p className="font-medium text-brown">CITAM Nakuru</p>
+                <p className="text-brown/70">Nakuru, Kenya</p>
                 <a 
-                  href="https://maps.google.com" 
+                  href="https://maps.app.goo.gl/6MkVvPTAKdL21Aj28" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block mt-2 text-sm text-terracotta hover:underline"
@@ -125,6 +125,15 @@ export default function DetailsPage() {
                 </a>
               </div>
             </div>
+          </div>
+
+          <div className="mt-8 rounded-xl overflow-hidden relative w-full h-64 sm:h-80 shadow-inner border border-border/40">
+            <Image 
+              src="/images/church.jpg" 
+              alt="CITAM Nakuru Church"
+              fill
+              className="object-cover"
+            />
           </div>
 
           <div className="mt-6 pt-6 border-t border-brown/10">
