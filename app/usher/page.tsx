@@ -191,30 +191,27 @@ export default function UsherPage() {
           if (processingRef.current) return
           processingRef.current = true
 
-          // Extract token from URL
-          const confirmIdx = decodedText.indexOf('/confirm/')
-          if (confirmIdx === -1) {
-            setScannerStatus('error')
-            setScannerError('Invalid QR code — not a guest QR')
-            processingRef.current = false
-            setTimeout(() => {
-              setScannerStatus('scanning')
-              setScannerError('')
-            }, 2000)
-            return
+          // Extract token from URL or use raw text if it's just a token
+          let token = '';
+          const confirmIdx = decodedText.indexOf('/confirm/');
+          
+          if (confirmIdx !== -1) {
+            // It's a URL like https://domain.com/confirm/XYZ
+            token = decodedText.substring(confirmIdx + '/confirm/'.length).split(/[?#]/)[0];
+          } else {
+            // Assume the QR code contains just the raw token string
+            token = decodedText.trim();
           }
 
-          const token = decodedText.substring(confirmIdx + '/confirm/'.length).split(/[?#]/)[0]
-
-          if (!token) {
-            setScannerStatus('error')
-            setScannerError('Invalid QR code — no token found')
-            processingRef.current = false
+          if (!token || token.includes(' ')) {
+            setScannerStatus('error');
+            setScannerError('Invalid QR code format');
+            processingRef.current = false;
             setTimeout(() => {
-              setScannerStatus('scanning')
-              setScannerError('')
-            }, 2000)
-            return
+              setScannerStatus('scanning');
+              setScannerError('');
+            }, 2000);
+            return;
           }
 
           setScannerStatus('found')
