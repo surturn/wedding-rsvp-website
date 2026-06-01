@@ -9,6 +9,7 @@ import { LeafDecoration } from '@/components/leaf-decoration'
 import { FallingPetals, CornerWreath, FloatingScriptureVerses, MobileScriptureVerses } from '@/components/florals'
 import { HeroCouplePhoto, AboutCouplePhoto } from '@/components/couple-photo'
 import { HowItBegan } from '@/components/how-it-began'
+import PolaroidDump from '@/components/polaroid-dump'
 
 export default function HomePage() {
   const prefersReducedMotion = useReducedMotion()
@@ -19,19 +20,6 @@ export default function HomePage() {
   useEffect(() => setMounted(true), [])
   const useScrollAnimations = mounted && !prefersReducedMotion
 
-  // 3D Scroll Effect refs and transforms
-  const storyRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: storyRef,
-    offset: ["start end", "end start"]
-  })
-  
-  // 3D Transforms mapped to scroll progress
-  const storyRotateX = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [35, 0, 0, -35])
-  const storyOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
-  const storyScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.85, 1, 1, 0.85])
-  const storyY = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [100, 0, 0, -100])
-  
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 }
@@ -298,87 +286,7 @@ export default function HomePage() {
       <HowItBegan />
 
       {/* ===================== OUR STORY ===================== */}
-      <section ref={storyRef} className="py-16 md:py-32 bg-warm-white overflow-hidden" style={{ perspective: '1200px' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div
-            style={{
-              rotateX: useScrollAnimations ? storyRotateX : 0,
-              opacity: useScrollAnimations ? storyOpacity : 1,
-              scale: useScrollAnimations ? storyScale : 1,
-              y: useScrollAnimations ? storyY : 0,
-              transformStyle: "preserve-3d"
-            }}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
-            className="text-center origin-center"
-          >
-            {/* Section header */}
-            <motion.div variants={fadeInUp} transition={{ duration: 0.8 }} className="mb-8 md:mb-12">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="h-px w-12 bg-terracotta/40" />
-                <HandSignIcon className="w-8 h-8 text-terracotta/60" />
-                <div className="h-px w-12 bg-terracotta/40" />
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brown">Our Story</h2>
-            </motion.div>
-
-            {/* About section couple photo */}
-            <motion.div
-              variants={fadeInUp}
-              transition={{ duration: 0.8 }}
-              className="flex justify-center mb-8 md:mb-12"
-            >
-              <AboutCouplePhoto />
-            </motion.div>
-
-            {/* Story content */}
-            <div className="space-y-6 md:space-y-8 text-foreground/80 text-base sm:text-lg md:text-xl leading-relaxed">
-              <motion.p variants={fadeInUp} transition={{ duration: 0.8 }}>
-                It began in a Bible study group, where two hearts found common ground in faith 
-                and a shared calling to serve.
-              </motion.p>
-
-              <motion.p variants={fadeInUp} transition={{ duration: 0.8 }}>
-                When Manuh left for a month-long mission trip to Zambia, Anne was the only person 
-                outside his family who checked in on him — every single day. Through prayers and 
-                messages across continents, their friendship grew into something deeper.
-              </motion.p>
-
-              <motion.div 
-                variants={fadeInUp} 
-                transition={{ duration: 0.8 }}
-                className="py-4 md:py-6"
-              >
-                <div className="flex items-center justify-center gap-2 sm:gap-3">
-                  <HandSignIcon className="w-5 h-5 sm:w-6 sm:h-6 text-terracotta flex-shrink-0" />
-                  <span className="text-terracotta font-serif text-base sm:text-xl italic">
-                    He proposed via email — in Sign Language
-                  </span>
-                  <HandSignIcon className="w-5 h-5 sm:w-6 sm:h-6 text-terracotta flex-shrink-0" />
-                </div>
-              </motion.div>
-
-              <motion.p variants={fadeInUp} transition={{ duration: 0.8 }}>
-                Today, Manuh and Anne serve together as missionaries, sharing the love of Christ 
-                through both words and signs — reaching hearts that hear and hands that speak.
-              </motion.p>
-            </div>
-
-            {/* Decorative divider */}
-            <motion.div 
-              variants={fadeInUp} 
-              transition={{ duration: 0.8 }}
-              className="mt-8 md:mt-12 flex items-center justify-center gap-3"
-            >
-              <div className="h-px w-16 bg-sage/40" />
-              <HeartHandsIcon className="w-6 h-6 text-sage/60" />
-              <div className="h-px w-16 bg-sage/40" />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+      <PolaroidDump />
 
       {/* ===================== SCRIPTURE QUOTE ===================== */}
       <section className="py-14 md:py-28 bg-sage/10">

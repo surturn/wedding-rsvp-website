@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Lato } from 'next/font/google'
+import { Playfair_Display, Lato, Caveat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Navigation } from '@/components/navigation'
@@ -16,6 +16,12 @@ const lato = Lato({
   subsets: ["latin"],
   weight: ['300', '400', '700'],
   variable: '--font-sans',
+  display: 'swap',
+})
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: '--font-handwriting',
   display: 'swap',
 })
 
@@ -67,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${lato.variable} bg-cream`}>
+    <html lang="en" className={`${playfair.variable} ${lato.variable} ${caveat.variable} bg-cream`}>
       <body className="font-sans antialiased min-h-screen flex flex-col">
         {/* Grain texture overlay for rustic paper feel */}
         <div className="grain-overlay" aria-hidden="true" />
