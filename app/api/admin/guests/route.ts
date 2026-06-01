@@ -1,45 +1,19 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { requireAuth } from '@/lib/auth'
+import { fetchGuests } from '@/lib/nocodb'
 
-const NOCODB_URL =
-  'https://nocodb-production-54ae.up.railway.app/api/v1/db/data/v1/Guests/Guests'
-
-export async function GET() {
-  const token = process.env.NOCODB_API_TOKEN
-
-  if (!token) {
-    console.error('NOCODB_API_TOKEN is not configured')
-    return NextResponse.json(
-      { error: 'Server configuration error' },
-      { status: 500 }
-    )
-  }
+export async function GET(request: NextRequest) {
+  // Verify admin session cookie
+  const auth = await requireAuth(request, 'admin')
+  if (auth instanceof NextResponse) return auth
 
   try {
-    const response = await fetch(NOCODB_URL, {
-      headers: {
-        'xc-token': token,
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('NocoDB error:', response.status, errorText)
-      return NextResponse.json(
-        { error: 'Failed to fetch guest data' },
-        { status: response.status }
-      )
-    }
-
-    const data = await response.json()
-    const guests = data.list || []
-
+    const guests = await fetchGuests()
     return NextResponse.json({ guests })
   } catch (error) {
-    console.error('NocoDB fetch error:', error)
+    console.error('Failed to fetch guests:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to fetch guest data' },
       { status: 500 }
     )
   }

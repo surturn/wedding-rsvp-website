@@ -13,6 +13,7 @@ export default function RSVPPage() {
   
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     phone: '',
     message: '',
     attending: true,
@@ -34,6 +35,7 @@ export default function RSVPPage() {
         },
         body: JSON.stringify({
           name: formData.name,
+          email: formData.email,
           phone: formData.phone,
           message: formData.message,
           attending: formData.attending,
@@ -197,6 +199,25 @@ export default function RSVPPage() {
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 border border-border rounded-md bg-cream/50 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-all duration-200"
               placeholder="Your full name"
+            />
+          </motion.div>
+
+          {/* Email */}
+          <motion.div variants={itemVariants}>
+            <label htmlFor="email" className="block text-sm font-medium text-brown mb-2">
+              Email Address <span className="text-terracotta">*</span>
+            </label>
+            <motion.input
+              variants={inputFocusVariants}
+              initial="rest"
+              whileFocus="focus"
+              type="email"
+              id="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-4 py-3 border border-border rounded-md bg-cream/50 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-all duration-200"
+              placeholder="you@example.com"
             />
           </motion.div>
 

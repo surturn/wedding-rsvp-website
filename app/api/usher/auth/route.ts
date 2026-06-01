@@ -3,29 +3,29 @@ import { signSessionToken, setSessionCookie, clearSessionCookie } from '@/lib/au
 
 export async function POST(request: NextRequest) {
   try {
-    const { password } = await request.json()
+    const { pin } = await request.json()
 
-    const expectedPassword = process.env.ADMIN_PASSWORD?.trim()
+    const expectedPin = process.env.USHER_PIN?.trim()
 
-    if (!expectedPassword) {
-      console.error('ADMIN_PASSWORD is not configured')
+    if (!expectedPin) {
+      console.error('USHER_PIN is not configured')
       return NextResponse.json(
         { error: 'Server configuration error' },
         { status: 500 }
       )
     }
 
-    if (password?.trim() !== expectedPassword) {
+    if (pin?.trim() !== expectedPin) {
       return NextResponse.json(
-        { error: 'Incorrect password' },
+        { error: 'Incorrect PIN' },
         { status: 401 }
       )
     }
 
-    // Password correct — sign a JWT and set it as an httpOnly cookie
-    const token = await signSessionToken('admin')
+    // PIN correct — sign a JWT and set it as an httpOnly cookie
+    const token = await signSessionToken('usher')
     const response = NextResponse.json({ success: true })
-    setSessionCookie(response, 'admin', token)
+    setSessionCookie(response, 'usher', token)
 
     return response
   } catch {
@@ -39,6 +39,6 @@ export async function POST(request: NextRequest) {
 // DELETE — log out (clear the cookie)
 export async function DELETE() {
   const response = NextResponse.json({ success: true })
-  clearSessionCookie(response, 'admin')
+  clearSessionCookie(response, 'usher')
   return response
 }

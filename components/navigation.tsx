@@ -18,8 +18,12 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
-  // Don't show navigation on admin page
-  if (pathname === '/admin') return null
+  // Don't show navigation on admin, usher, or confirm pages
+  if (
+    pathname === '/admin' ||
+    pathname === '/usher' ||
+    pathname.startsWith('/confirm/')
+  ) return null
 
   return (
     <motion.nav 

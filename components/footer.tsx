@@ -1,11 +1,19 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { HandSignIcon } from './hand-sign-icon'
 
 export function Footer() {
   const prefersReducedMotion = useReducedMotion()
-  
+  const pathname = usePathname()
+
+  // Don't show footer on admin, usher, or confirm pages
+  if (
+    pathname === '/admin' ||
+    pathname === '/usher' ||
+    pathname.startsWith('/confirm/')
+  ) return null
   return (
     <motion.footer 
       initial={{ opacity: 0 }}

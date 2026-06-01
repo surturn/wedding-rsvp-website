@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
 
     // Validate required fields
-    const { name, attending, guestCount, message, phone } = body
+    const { name, attending, guestCount, message, phone, email } = body
     
     if (typeof name !== 'string' || typeof attending !== 'boolean') {
       return NextResponse.json(
@@ -18,9 +18,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (typeof email !== 'string' || !email.includes('@')) {
+      return NextResponse.json(
+        { error: 'A valid email address is required' },
+        { status: 400 }
+      )
+    }
+
     // Forward to n8n webhook with exact required keys
     const payload = {
       name: name,
+      email: email,
       attending: attending,
       guestCount: typeof guestCount === 'number' ? guestCount : (Number(guestCount) || 0),
       message: typeof message === 'string' ? message : '',
