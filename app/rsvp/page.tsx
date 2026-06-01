@@ -54,6 +54,26 @@ export default function RSVPPage() {
     }
   }
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 1. Strip spaces, dashes, and plus signs
+    let rawValue = e.target.value.replace(/[\s\-+]/g, '');
+    
+    // 2. Strip leading zero and replace with '254'
+    if (rawValue.startsWith('0')) {
+      rawValue = '254' + rawValue.slice(1);
+    }
+    
+    // 3. Remove any non-numeric characters that might have slipped through
+    rawValue = rawValue.replace(/\D/g, '');
+
+    // 4. Limit to 12 digits (in case they paste a very long number)
+    if (rawValue.length > 12) {
+      rawValue = rawValue.slice(0, 12);
+    }
+
+    setFormData({ ...formData, phone: rawValue });
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -233,8 +253,9 @@ export default function RSVPPage() {
               type="tel"
               id="phone"
               required
+              maxLength={12}
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={handlePhoneChange}
               className="w-full px-4 py-3 border border-border rounded-md bg-cream/50 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-all duration-200"
               placeholder="254700000000"
             />

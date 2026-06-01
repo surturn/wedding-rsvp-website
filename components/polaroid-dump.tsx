@@ -214,21 +214,21 @@ function PolaroidCard({
         }, 150);
       }}
       onPointerDown={handlePointerDown}
-      initial={{ opacity: 0, y: 50, rotate: 0, x: 0 }}
+      initial={{ opacity: 0, y: 100 }}
       whileInView={{ 
         opacity: 1, 
-        y: 0, 
-        rotate: photo.initRotation,
-        x: photo.xOffset,
+        y: 0,
         transition: { type: 'spring', stiffness: 50, damping: 20 }
       }}
-      viewport={{ once: true, margin: "-100px" }}
-      whileHover={{ scale: 1.05, zIndex: localZ + 10 }}
-      whileDrag={{ scale: 1.1, cursor: 'grabbing', zIndex: localZ + 20 }}
+      viewport={{ once: true, margin: "-50px" }}
+      whileHover={{ scale: 1.05 }}
+      whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
       style={{ 
         zIndex: localZ, 
         touchAction: 'pan-y',
         perspective: 1200,
+        x: photo.xOffset,
+        rotate: photo.initRotation,
         willChange: 'transform'
       }}
       className="absolute cursor-grab"
@@ -278,8 +278,8 @@ function PolaroidCard({
 
         {/* ================= BACK OF CARD ================= */}
         <div 
-          className="absolute inset-0 p-6 bg-[#fdfbf7] shadow-xl rounded-sm flex flex-col items-center justify-center border border-neutral-100 backface-hidden"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          className="absolute inset-0 p-6 bg-[#fdfbf7] shadow-xl rounded-sm flex flex-col items-center justify-center border border-neutral-100"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg) translateZ(1px)' }}
         >
           {/* Subtle tape effect on back */}
           <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 w-24 h-6 bg-white/40 backdrop-blur-sm border border-white/20 shadow-sm rotate-[-2deg] opacity-70" />
