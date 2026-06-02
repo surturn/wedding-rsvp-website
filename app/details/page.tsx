@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { MapPin, Clock, Calendar, HelpCircle, Church, PartyPopper } from 'lucide-react'
 import { HandSignIcon } from '@/components/hand-sign-icon'
 import { SimpleLeaf } from '@/components/leaf-decoration'
+import { CornerWreath } from '@/components/florals/corner-wreath'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -127,13 +128,22 @@ export default function DetailsPage() {
             </div>
           </div>
 
-          <div className="mt-8 rounded-xl overflow-hidden relative w-full h-64 sm:h-80 shadow-inner border border-border/40">
-            <Image 
-              src="/images/church.jpg" 
-              alt="CITAM Nakuru Church"
-              fill
-              className="object-cover"
-            />
+          <div className="mt-8 relative p-3 md:p-4 bg-white shadow-xl rounded-sm border border-neutral-100 rotate-[1deg] max-w-xl mx-auto">
+            {/* Flower Petal Frame */}
+            <CornerWreath corner="top-left" size={100} className="absolute top-[-20px] left-[-20px] text-sage opacity-90 z-10 pointer-events-none drop-shadow-md" />
+            <CornerWreath corner="bottom-right" size={100} className="absolute bottom-[-20px] right-[-20px] text-terracotta opacity-80 z-10 pointer-events-none drop-shadow-md" />
+            
+            <div className="relative w-full h-64 sm:h-80 overflow-hidden bg-neutral-200">
+              <Image 
+                src="/images/church.jpg" 
+                alt="CITAM Nakuru Church"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="pt-4 pb-2 text-center">
+              <p className="font-handwriting text-3xl text-brown">Where we say &ldquo;I do&rdquo;</p>
+            </div>
           </div>
 
           <div className="mt-6 pt-6 border-t border-brown/10">
