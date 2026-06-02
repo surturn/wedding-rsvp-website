@@ -10,14 +10,22 @@ const PRESET_AMOUNTS = [500, 1000, 2000, 5000]
 
 interface MpesaPaymentFormProps {
   onPaymentInitiated: (checkoutRequestId: string) => void
+  defaultPhone?: string
+  defaultName?: string
+  readOnlyPhone?: boolean
 }
 
-export function MpesaPaymentForm({ onPaymentInitiated }: MpesaPaymentFormProps) {
+export function MpesaPaymentForm({ 
+  onPaymentInitiated,
+  defaultPhone,
+  defaultName,
+  readOnlyPhone
+}: MpesaPaymentFormProps) {
   const prefersReducedMotion = useReducedMotion()
 
   const [formData, setFormData] = useState({
-    guestName: '',
-    phoneNumber: '',
+    guestName: defaultName || '',
+    phoneNumber: defaultPhone || '',
     amount: '',
     message: '',
   })
@@ -188,10 +196,11 @@ export function MpesaPaymentForm({ onPaymentInitiated }: MpesaPaymentFormProps) 
           type="tel"
           id="phoneNumber"
           required
+          disabled={readOnlyPhone}
           maxLength={12}
           value={formData.phoneNumber}
           onChange={handlePhoneChange}
-          className="w-full px-4 py-3 border border-border rounded-md bg-cream/50 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-all duration-200"
+          className={`w-full px-4 py-3 border border-border rounded-md bg-cream/50 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:border-terracotta transition-all duration-200 ${readOnlyPhone ? 'opacity-70 cursor-not-allowed' : ''}`}
           placeholder="254700000000"
         />
         <p className="text-xs text-muted-foreground mt-1">

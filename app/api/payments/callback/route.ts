@@ -3,6 +3,8 @@ import { extractCallbackData, type MpesaCallbackBody } from '@/lib/mpesa'
 import {
   fetchMpesaPaymentByCheckoutId,
   patchMpesaPayment,
+  fetchPledgeByPhone,
+  patchPledge,
 } from '@/lib/nocodb'
 
 // ---------------------------------------------------------------------------
@@ -46,6 +48,24 @@ export async function POST(request: NextRequest) {
         TransactionDate: data.transactionDate,
         UpdatedAt: new Date().toISOString(),
       })
+
+      // ------ Increment pledge if successful ------
+      if (data.resultCode === 0 && data.phoneNumber) {
+        try {
+          const pledge = await fetchPledgeByPhone(data.phoneNumber)
+          if (pledge) {
+            const newAmountPaid = pledge.AmountPaid + (data.amount || 0)
+            const pledgeStatus = newAmountPaid >= pledge.PledgedAmount ? 'FULFILLED' : 'PARTIAL'
+            await patchPledge(pledge.Id, { 
+              AmountPaid: newAmountPaid, 
+              Status: pledgeStatus, 
+              UpdatedAt: new Date().toISOString() 
+            })
+          }
+        } catch (pledgeError) {
+          console.error('Failed to update pledge in NocoDB:', pledgeError)
+        }
+      }
     } catch (dbError) {
       // Log but never fail the response — Safaricom must get 200
       console.error('Failed to update payment in NocoDB:', dbError)

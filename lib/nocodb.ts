@@ -282,3 +282,97 @@ export async function fetchAllMpesaPayments(): Promise<MpesaPayment[]> {
   const data = (await response.json()) as NocoDB_ListResponse
   return (data.list || []) as unknown as MpesaPayment[]
 }
+
+// ---------------------------------------------------------------------------
+// Pledges — interface & NocoDB helpers
+// ---------------------------------------------------------------------------
+
+export type PledgeStatus = 'PENDING' | 'PARTIAL' | 'FULFILLED'
+
+export interface Pledge {
+  Id: number
+  GuestName: string
+  PhoneNumber: string
+  PledgedAmount: number
+  AmountPaid: number
+  Status: PledgeStatus
+  CreatedAt: string
+  UpdatedAt: string | null
+}
+
+const NOCODB_PLEDGES_URL = process.env.NOCODB_PLEDGES_TABLE_URL ?? ''
+
+function getPledgesTableUrl(): string {
+  if (!NOCODB_PLEDGES_URL) {
+    throw new Error('NOCODB_PLEDGES_TABLE_URL is not configured')
+  }
+  return NOCODB_PLEDGES_URL
+}
+
+// ---------------------------------------------------------------------------
+// Create a new Pledge row in NocoDB
+// ---------------------------------------------------------------------------
+export async function createPledge(
+  data: Omit<Pledge, 'Id' | 'CreatedAt' | 'UpdatedAt'>
+): Promise<Pledge> {
+  const url = getPledgesTableUrl()
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: nocoHeaders(),
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(`NocoDB POST error ${response.status}: ${text}`)
+  }
+
+  return (await response.json()) as Pledge
+}
+
+// ---------------------------------------------------------------------------
+// Fetch a pledge by phone number
+// ---------------------------------------------------------------------------
+export async function fetchPledgeByPhone(
+  phone: string
+): Promise<Pledge | null> {
+  const url = new URL(getPledgesTableUrl())
+  url.searchParams.set('where', `(PhoneNumber,eq,${phone})`)
+  url.searchParams.set('limit', '1')
+
+  const response = await fetch(url.toString(), {
+    headers: nocoHeaders(),
+    cache: 'no-store',
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(`NocoDB GET error ${response.status}: ${text}`)
+  }
+
+  const data = (await response.json()) as NocoDB_ListResponse
+  const rows = data.list || []
+  return rows.length > 0 ? (rows[0] as unknown as Pledge) : null
+}
+
+// ---------------------------------------------------------------------------
+// Patch a pledge row
+// ---------------------------------------------------------------------------
+export async function patchPledge(
+  id: number,
+  fields: Record<string, unknown>
+): Promise<void> {
+  const url = `${getPledgesTableUrl()}/${id}`
+
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: nocoHeaders(),
+    body: JSON.stringify(fields),
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(`NocoDB PATCH error ${response.status}: ${text}`)
+  }
+}

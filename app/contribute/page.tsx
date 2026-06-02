@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HandSignIcon } from '@/components/hand-sign-icon'
 import { SimpleLeaf } from '@/components/leaf-decoration'
@@ -40,9 +41,17 @@ export default function ContributePage() {
           <h1 className="font-serif text-4xl md:text-5xl text-brown mb-4">
             Gift the Couple
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-6">
             Bless Manuh &amp; Anne with a gift via M-Pesa
           </p>
+          <div className="flex justify-center">
+            <Link 
+              href="/pledges" 
+              className="text-terracotta hover:text-terracotta/80 text-sm font-medium underline underline-offset-4 transition-colors"
+            >
+              Or, make a Pledge (Lipa mdogo mdogo)
+            </Link>
+          </div>
         </motion.div>
 
         {/* Content — Form or Status */}
