@@ -34,12 +34,14 @@ export async function POST(request: NextRequest) {
       }
 
       // ------ Determine status and patch ------
-      const isSuccess = data.resultCode === 0
+      let newStatus: 'COMPLETED' | 'FAILED' | 'CANCELLED' = 'FAILED'
+      if (data.resultCode === 0) newStatus = 'COMPLETED'
+      else if (data.resultCode === 1032) newStatus = 'CANCELLED'
 
       await patchMpesaPayment(payment.Id, {
         ResultCode: data.resultCode,
         ResultDesc: data.resultDesc,
-        Status: isSuccess ? 'COMPLETED' : 'FAILED',
+        Status: newStatus,
         MpesaReceiptNumber: data.mpesaReceiptNumber,
         TransactionDate: data.transactionDate,
         UpdatedAt: new Date().toISOString(),
