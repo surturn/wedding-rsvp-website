@@ -45,10 +45,10 @@ export function MpesaPaymentStatus({ checkoutRequestId, onReset }: MpesaPaymentS
         stopPolling()
         setStatus('COMPLETED')
         setReceiptNumber(data.mpesaReceiptNumber || null)
-      } else if (data.status === 'FAILED') {
+      } else if (data.status === 'FAILED' || data.status === 'CANCELLED') {
         stopPolling()
         setStatus('FAILED')
-        setErrorDescription(data.resultDesc || 'The payment was not completed.')
+        setErrorDescription(data.resultDesc || 'The payment was cancelled or failed.')
       }
       // If still PENDING, keep polling
     } catch {
