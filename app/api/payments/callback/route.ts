@@ -1,0 +1,59 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { extractCallbackData, type MpesaCallbackBody } from '@/lib/mpesa'
+import {
+  fetchMpesaPaymentByCheckoutId,
+  patchMpesaPayment,
+} from '@/lib/nocodb'
+
+// ---------------------------------------------------------------------------
+// POST /api/payments/callback — Safaricom M-Pesa webhook
+// ---------------------------------------------------------------------------
+
+export async function POST(request: NextRequest) {
+  // ALWAYS return 200 — Safaricom retries on non-200 responses
+  try {
+    const body = (await request.json()) as MpesaCallbackBody
+    const data = extractCallbackData(body)
+
+    console.log('M-Pesa callback received:', JSON.stringify(data))
+
+    // ------ Look up payment in NocoDB ------
+    try {
+      const payment = await fetchMpesaPaymentByCheckoutId(
+        data.checkoutRequestId
+      )
+
+      if (!payment) {
+        console.warn(
+          `No payment found for CheckoutRequestID: ${data.checkoutRequestId}`
+        )
+        return NextResponse.json(
+          { ResultCode: 0, ResultDesc: 'Accepted' },
+          { status: 200 }
+        )
+      }
+
+      // ------ Determine status and patch ------
+      const isSuccess = data.resultCode === 0
+
+      await patchMpesaPayment(payment.Id, {
+        ResultCode: data.resultCode,
+        ResultDesc: data.resultDesc,
+        Status: isSuccess ? 'COMPLETED' : 'FAILED',
+        MpesaReceiptNumber: data.mpesaReceiptNumber,
+        TransactionDate: data.transactionDate,
+        UpdatedAt: new Date().toISOString(),
+      })
+    } catch (dbError) {
+      // Log but never fail the response — Safaricom must get 200
+      console.error('Failed to update payment in NocoDB:', dbError)
+    }
+  } catch (parseError) {
+    console.error('Failed to parse callback body:', parseError)
+  }
+
+  return NextResponse.json(
+    { ResultCode: 0, ResultDesc: 'Accepted' },
+    { status: 200 }
+  )
+}

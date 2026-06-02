@@ -4,13 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Heart } from 'lucide-react'
 import { HandSignIcon } from './hand-sign-icon'
 
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/details', label: 'Details' },
   { href: '/rsvp', label: 'RSVP' },
+  { href: '/contribute', label: 'Contribute', icon: Heart },
 ]
 
 export function Navigation() {
@@ -48,11 +49,12 @@ export function Navigation() {
                 href={item.href}
                 className="relative group"
               >
-                <span className={`text-sm tracking-wide transition-colors ${
+                <span className={`text-sm tracking-wide transition-colors flex items-center gap-1 ${
                   pathname === item.href 
                     ? 'text-terracotta font-medium' 
                     : 'text-brown hover:text-terracotta'
                 }`}>
+                  {'icon' in item && item.icon && <item.icon className="w-3.5 h-3.5" />}
                   {item.label}
                 </span>
                 {pathname === item.href && (
