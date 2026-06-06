@@ -44,7 +44,7 @@ export default function DetailsPage() {
     },
     {
       question: 'What about gifts?',
-      answer: 'Your presence is truly the greatest gift. If you wish to give, we have a small registry or you may contribute to our mission fund supporting deaf ministry in Zambia.'
+      answer: 'Your presence is truly the greatest gift. We have a small registry for those who wish to give.'
     },
     {
       question: 'Will there be sign language interpretation?',
@@ -105,8 +105,8 @@ export default function DetailsPage() {
               <div className="flex items-start gap-4">
                 <Clock className="w-5 h-5 text-sage mt-1 shrink-0" />
                 <div>
-                  <p className="font-medium text-brown">2:00 PM</p>
-                  <p className="text-sm text-brown/60">Please arrive by 1:45 PM</p>
+                  <p className="font-medium text-brown">10:00 AM</p>
+                  <p className="text-sm text-brown/60">Please arrive by 9:45 AM</p>
                 </div>
               </div>
             </div>
@@ -171,24 +171,22 @@ export default function DetailsPage() {
               <div className="flex items-start gap-4">
                 <Clock className="w-5 h-5 text-terracotta mt-1 shrink-0" />
                 <div>
-                  <p className="font-medium text-brown">4:00 PM — 10:00 PM</p>
-                  <p className="text-sm text-brown/60">Cocktails, dinner, dancing & fellowship</p>
+                  <p className="font-medium text-brown">1:00 PM</p>
+                  <p className="text-sm text-brown/60">Live performances, dinner, dancing & fellowship</p>
                 </div>
               </div>
               <p className="text-brown/70 text-sm pl-9">
-                Join us immediately following the ceremony for an evening of celebration, 
-                delicious food, and joyful fellowship as we begin this new chapter.
+                Join us for an evening of celebration! The exact location within the venue will be announced on the wedding day.
               </p>
             </div>
             
             <div className="flex items-start gap-4">
               <MapPin className="w-5 h-5 text-terracotta mt-1 shrink-0" />
               <div>
-                <p className="font-medium text-brown">Rustic Barn at Meadow Creek</p>
-                <p className="text-brown/70">5678 Country Road</p>
-                <p className="text-brown/70">Nashville, TN 37215</p>
+                <p className="font-medium text-brown">CITAM Nakuru</p>
+                <p className="text-brown/70">Nakuru, Kenya</p>
                 <a 
-                  href="https://maps.google.com" 
+                  href="https://maps.app.goo.gl/6MkVvPTAKdL21Aj28" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block mt-2 text-sm text-terracotta hover:underline"

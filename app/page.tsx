@@ -145,7 +145,7 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
               className="mt-8"
             >
-              <Countdown targetDate="2026-09-05T14:00:00" />
+              <Countdown targetDate="2026-09-05T10:00:00" />
             </motion.div>
 
             {/* CTA */}
@@ -240,7 +240,7 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
               className="mt-16"
             >
-              <Countdown targetDate="2026-09-05T14:00:00" />
+              <Countdown targetDate="2026-09-05T10:00:00" />
             </motion.div>
 
             {/* CTA */}
