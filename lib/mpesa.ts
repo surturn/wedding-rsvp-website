@@ -159,6 +159,7 @@ export async function getOAuthToken(): Promise<string> {
     headers: {
       Authorization: `Basic ${credentials}`,
     },
+    cache: 'no-store',
   })
 
   if (!response.ok) {
