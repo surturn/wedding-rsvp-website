@@ -11,6 +11,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/details', label: 'Details' },
   { href: '/rsvp', label: 'RSVP' },
+  { href: '/contribute', label: 'Gift', icon: Heart },
 ]
 
 export function Navigation() {
