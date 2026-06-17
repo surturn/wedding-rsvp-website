@@ -5,7 +5,6 @@ import './globals.css'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { FloatingBotanicalsBackground } from '@/components/florals'
-import { ContributeButton } from '@/components/contribute-button'
 
 const playfair = Playfair_Display({ 
   subsets: ["latin"],
@@ -85,7 +84,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <ContributeButton />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
