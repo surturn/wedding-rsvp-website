@@ -1,8 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { MapPin, Clock, Calendar, HelpCircle, Church, PartyPopper } from 'lucide-react'
-import { HandSignIcon } from '@/components/hand-sign-icon'
+import { MapPin, Clock, Calendar, HelpCircle, Church, PartyPopper, Heart } from 'lucide-react'
 import { SimpleLeaf } from '@/components/leaf-decoration'
 import { CornerWreath } from '@/components/florals/corner-wreath'
 import Link from 'next/link'
@@ -39,16 +38,8 @@ export default function DetailsPage() {
       answer: 'Free parking is available at both venues. The church has a large lot behind the building, and the reception barn has ample space in the front field. Signs will guide you.'
     },
     {
-      question: 'Are children welcome?',
-      answer: 'Absolutely! We love little ones. A supervised kids corner with activities will be available at the reception for ages 3-10.'
-    },
-    {
       question: 'What about gifts?',
       answer: 'Your presence is truly the greatest gift. We have a small registry for those who wish to give.'
-    },
-    {
-      question: 'Will there be sign language interpretation?',
-      answer: 'Yes! The ceremony and key reception moments will have ASL interpretation. Seating near the interpreter will be available — just let us know on your RSVP.'
     },
     {
       question: 'Can I take photos during the ceremony?',
@@ -69,7 +60,7 @@ export default function DetailsPage() {
       >
         <div className="flex items-center justify-center gap-3 mb-4">
           <SimpleLeaf className="w-6 h-6 text-sage/60 rotate-[-30deg]" />
-          <HandSignIcon className="w-8 h-8 text-terracotta/70" />
+          <Heart className="w-8 h-8 text-terracotta/70" />
           <SimpleLeaf className="w-6 h-6 text-sage/60 rotate-[30deg] scale-x-[-1]" />
         </div>
         <h1 className="font-serif text-4xl md:text-5xl text-brown mb-4">
@@ -146,12 +137,6 @@ export default function DetailsPage() {
             </div>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-brown/10">
-            <div className="flex items-center gap-2 text-sm text-sage">
-              <HandSignIcon className="w-4 h-4" />
-              <span>ASL interpretation will be provided throughout the ceremony</span>
-            </div>
-          </div>
         </motion.section>
 
         {/* Reception Section */}
@@ -247,8 +232,8 @@ export default function DetailsPage() {
           {/* Decorative elements */}
           <SimpleLeaf className="absolute top-6 left-6 w-10 h-10 text-warm-white/10 rotate-[-20deg]" />
           <SimpleLeaf className="absolute bottom-6 right-6 w-10 h-10 text-warm-white/10 rotate-[160deg]" />
-          <HandSignIcon className="absolute top-6 right-6 w-8 h-8 text-warm-white/10" />
-          <HandSignIcon className="absolute bottom-6 left-6 w-8 h-8 text-warm-white/10" />
+          <Heart className="absolute top-6 right-6 w-8 h-8 text-warm-white/10" />
+          <Heart className="absolute bottom-6 left-6 w-8 h-8 text-warm-white/10" />
           
           <div className="relative text-center max-w-2xl mx-auto">
             <p className="text-warm-white/60 text-sm uppercase tracking-widest mb-6">Our Verse</p>

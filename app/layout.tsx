@@ -28,7 +28,7 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://manuandanne.love'),
   title: 'Manuh & Anne | Wedding Celebration',
-  description: 'Join us in celebrating the union of Manuscripts and Anne James. Two hearts, one love, speaking in words and signs.',
+  description: 'Join us in celebrating the union of Manuscripts and Anne James. Two hearts, one love.',
   openGraph: {
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
