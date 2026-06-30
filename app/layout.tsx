@@ -26,19 +26,28 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://weddings.invonicstechnologies.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://wedding.invonicstechnologies.com'),
   title: 'Manuh & Anne | Wedding Celebration',
   description: 'Join us in celebrating the union of Manuscripts and Anne James. Two hearts, one love.',
   openGraph: {
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
-    url: 'https://weddings.invonicstechnologies.com',
+    url: 'https://wedding.invonicstechnologies.com',
     type: 'website',
+    images: [
+      {
+        url: 'https://wedding.invonicstechnologies.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Manuh & Anne — A love story written by God',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
+    images: ['https://wedding.invonicstechnologies.com/og-image.jpg'],
   },
   icons: {
     icon: '/newfavicon.png',
