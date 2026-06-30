@@ -33,20 +33,11 @@ export const metadata: Metadata = {
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
     type: 'website',
-    images: [
-      {
-        url: '/images/couple.jpg',
-        width: 800,
-        height: 800,
-        alt: 'Manuh & Anne — A love story written by God',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
-    images: ['/images/couple.jpg'],
   },
   icons: {
     icon: '/newfavicon.png',
