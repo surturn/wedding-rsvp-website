@@ -29,7 +29,7 @@ export function CornerWreath({ corner, className = '', size = 120 }: CornerWreat
         pathLength: {
           delay: prefersReducedMotion ? 0 : i * 0.2,
           duration: prefersReducedMotion ? 0 : 1.5,
-          ease: 'easeInOut',
+          ease: 'easeInOut' as const,
         },
         opacity: { delay: prefersReducedMotion ? 0 : i * 0.2, duration: 0.3 },
       },

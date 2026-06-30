@@ -14,7 +14,7 @@ export default function DetailsPage() {
     initial: { opacity: 0, y: 40 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: '-50px' },
-    transition: { duration: prefersReducedMotion ? 0 : 0.6, ease: 'easeOut' }
+    transition: { duration: prefersReducedMotion ? 0 : 0.6, ease: 'easeOut' as const }
   }
 
   const staggerContainer = {
@@ -59,9 +59,9 @@ export default function DetailsPage() {
         {...fadeInUp}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <SimpleLeaf className="w-6 h-6 text-sage/60 rotate-[-30deg]" />
+          <SimpleLeaf className="w-6 h-6 text-sage/60 -rotate-30" />
           <Heart className="w-8 h-8 text-terracotta/70" />
-          <SimpleLeaf className="w-6 h-6 text-sage/60 rotate-[30deg] scale-x-[-1]" />
+          <SimpleLeaf className="w-6 h-6 text-sage/60 rotate-30 scale-x-[-1]" />
         </div>
         <h1 className="font-serif text-4xl md:text-5xl text-brown mb-4">
           Wedding Details
@@ -119,10 +119,10 @@ export default function DetailsPage() {
             </div>
           </div>
 
-          <div className="mt-8 relative p-3 md:p-4 bg-white shadow-xl rounded-sm border border-neutral-100 rotate-[1deg] max-w-xl mx-auto">
+          <div className="mt-8 relative p-3 md:p-4 bg-white shadow-xl rounded-sm border border-neutral-100 rotate-1 max-w-xl mx-auto">
             {/* Flower Petal Frame */}
-            <CornerWreath corner="top-left" size={100} className="absolute top-[-20px] left-[-20px] text-sage opacity-90 z-10 pointer-events-none drop-shadow-md" />
-            <CornerWreath corner="bottom-right" size={100} className="absolute bottom-[-20px] right-[-20px] text-terracotta opacity-80 z-10 pointer-events-none drop-shadow-md" />
+            <CornerWreath corner="top-left" size={100} className="absolute -top-5 -left-5 text-sage opacity-90 z-10 pointer-events-none drop-shadow-md" />
+            <CornerWreath corner="bottom-right" size={100} className="absolute -bottom-5 -right-5 text-terracotta opacity-80 z-10 pointer-events-none drop-shadow-md" />
             
             <div className="relative w-full h-64 sm:h-80 overflow-hidden bg-neutral-200">
               <Image 
@@ -191,7 +191,7 @@ export default function DetailsPage() {
           <h2 className="font-serif text-3xl text-brown mb-6 text-center">Dress Code</h2>
           
           <div className="text-center max-w-xl mx-auto">
-            <p className="text-xl text-brown font-medium mb-3">Rustic Smart Casual</p>
+            <p className="text-xl text-brown font-medium mb-3">Rustic Vintage Theme</p>
             <p className="text-brown/70 leading-relaxed mb-6">
               Think elegant yet comfortable — our celebration includes both an indoor ceremony 
               and an outdoor barn reception. Ladies, you may want to consider wedge heels 
@@ -230,8 +230,8 @@ export default function DetailsPage() {
           className="relative overflow-hidden rounded-2xl bg-brown text-warm-white p-10 md:p-14"
         >
           {/* Decorative elements */}
-          <SimpleLeaf className="absolute top-6 left-6 w-10 h-10 text-warm-white/10 rotate-[-20deg]" />
-          <SimpleLeaf className="absolute bottom-6 right-6 w-10 h-10 text-warm-white/10 rotate-[160deg]" />
+          <SimpleLeaf className="absolute top-6 left-6 w-10 h-10 text-warm-white/10 -rotate-20" />
+          <SimpleLeaf className="absolute bottom-6 right-6 w-10 h-10 text-warm-white/10 rotate-160" />
           <Heart className="absolute top-6 right-6 w-8 h-8 text-warm-white/10" />
           <Heart className="absolute bottom-6 left-6 w-8 h-8 text-warm-white/10" />
           
