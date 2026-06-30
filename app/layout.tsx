@@ -26,12 +26,13 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://manuandanne.love'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://weddings.invonicstechnologies.com'),
   title: 'Manuh & Anne | Wedding Celebration',
   description: 'Join us in celebrating the union of Manuscripts and Anne James. Two hearts, one love.',
   openGraph: {
     title: 'Manuh & Anne | Wedding Celebration',
     description: 'A love story written by God — September 5, 2026',
+    url: 'https://weddings.invonicstechnologies.com',
     type: 'website',
   },
   twitter: {
@@ -44,6 +45,9 @@ export const metadata: Metadata = {
     apple: '/newfavicon.png',
   },
   manifest: '/site.webmanifest',
+  other: {
+    'fb:app_id': 'YOUR_FB_APP_ID', // Replace with your actual Facebook App ID if you have one
+  }
 }
 
 export default function RootLayout({
