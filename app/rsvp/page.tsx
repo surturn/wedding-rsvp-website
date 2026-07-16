@@ -44,13 +44,21 @@ export default function RSVPPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to submit RSVP')
+        const data = await response.json().catch(() => null)
+        throw new Error(
+          data?.error ||
+            'Something went wrong. Please try again or contact the couple directly.'
+        )
       }
 
       setFormState('success')
-    } catch {
+    } catch (err) {
       setFormState('error')
-      setErrorMessage('Something went wrong. Please try again or contact the couple directly.')
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again or contact the couple directly.'
+      )
     }
   }
 
