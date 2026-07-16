@@ -80,6 +80,13 @@ export default function UsherPage() {
   const [checkingIn, setCheckingIn] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
 
+  // Add-guest (door fallback)
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [newName, setNewName] = useState('')
+  const [newCompany, setNewCompany] = useState('')
+  const [addSubmitting, setAddSubmitting] = useState(false)
+  const [addError, setAddError] = useState('')
+
   // ------------------------------------------------------------------
   // Auth check on mount
   // ------------------------------------------------------------------
@@ -437,6 +444,49 @@ export default function UsherPage() {
   }, [])
 
   // ------------------------------------------------------------------
+  // Add guest (door fallback) — create + check in a walk-in / missing guest
+  // ------------------------------------------------------------------
+
+  const handleAddGuest = useCallback(async () => {
+    const name = newName.trim()
+    if (!name) {
+      setAddError('Please enter a name.')
+      return
+    }
+    setAddSubmitting(true)
+    setAddError('')
+    try {
+      const guestCount = 1 + (parseInt(newCompany, 10) || 0)
+      const res = await fetch('/api/usher/guests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, guestCount }),
+      })
+      if (!res.ok) throw new Error('Failed to add guest')
+
+      const data = await res.json()
+      const guest = data.guest as Guest
+
+      // Show the guest card (already checked in) as confirmation.
+      setSelectedGuest(guest)
+      setShowConfetti(true)
+      setTimeout(() => setShowConfetti(false), 1500)
+
+      // Reset the form + search, and add to any loaded list.
+      setShowAddForm(false)
+      setNewName('')
+      setNewCompany('')
+      setSearchQuery('')
+      setSearchResults([])
+      setGuestList(prev => (prev.length > 0 ? [guest, ...prev] : prev))
+    } catch {
+      setAddError('Could not add guest. Please try again.')
+    } finally {
+      setAddSubmitting(false)
+    }
+  }, [newName, newCompany])
+
+  // ------------------------------------------------------------------
   // Helper — format time
   // ------------------------------------------------------------------
 
@@ -693,6 +743,88 @@ export default function UsherPage() {
                   onTap={() => setSelectedGuest(guest)}
                 />
               ))}
+            </div>
+
+            {/* Add-guest fallback — for anyone not in the system */}
+            <div className="mt-6 border-t border-[#E5E7EB] pt-4">
+              {!showAddForm ? (
+                <button
+                  onClick={() => {
+                    setNewName(searchQuery.trim())
+                    setNewCompany('')
+                    setAddError('')
+                    setShowAddForm(true)
+                  }}
+                  className="w-full py-3 border-2 border-dashed border-[#C9A84C] text-[#0D1B4B] rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-[#C9A84C]/5 transition-colors"
+                >
+                  <Users className="w-4 h-4" />
+                  Guest not listed? Add &amp; check in
+                </button>
+              ) : (
+                <div className="bg-white rounded-xl p-4 shadow-sm space-y-3">
+                  <p className="text-sm font-semibold text-gray-700">
+                    Add a guest not in the system
+                  </p>
+
+                  <input
+                    type="text"
+                    placeholder="Full name"
+                    value={newName}
+                    onChange={e => setNewName(e.target.value)}
+                    autoFocus
+                    className="w-full px-3 py-2.5 bg-gray-50 border border-[#E5E7EB] rounded-lg text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:border-[#C9A84C]"
+                  />
+
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">
+                      Additional guests in their party
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      max={20}
+                      placeholder="0"
+                      value={newCompany}
+                      onChange={e => setNewCompany(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-[#E5E7EB] rounded-lg text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:border-[#C9A84C]"
+                    />
+                  </div>
+
+                  {addError && (
+                    <p className="text-sm text-[#EF4444]">{addError}</p>
+                  )}
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      onClick={() => {
+                        setShowAddForm(false)
+                        setAddError('')
+                      }}
+                      disabled={addSubmitting}
+                      className="flex-1 py-2.5 bg-gray-100 text-gray-600 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleAddGuest}
+                      disabled={addSubmitting}
+                      className="flex-[2] py-2.5 bg-[#10B981] text-white rounded-lg font-medium hover:bg-[#0ea472] transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                    >
+                      {addSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Adding...
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-4 h-4" />
+                          Add &amp; Check In
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

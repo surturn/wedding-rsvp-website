@@ -152,6 +152,46 @@ export async function patchGuest(
 }
 
 // ---------------------------------------------------------------------------
+// Create a new guest row (used for on-the-spot door additions)
+// ---------------------------------------------------------------------------
+
+export async function createGuest(fields: {
+  name: string
+  phone?: string
+  email?: string
+  guestCount?: number
+  attending?: boolean
+  checkedIn?: boolean
+}): Promise<Guest> {
+  const body: Record<string, unknown> = {
+    Name: fields.name,
+    Phone: fields.phone ?? '',
+    Email: fields.email ?? '',
+    Attending: fields.attending ?? true,
+    GuestCount: fields.guestCount ?? 1,
+  }
+
+  if (fields.checkedIn) {
+    body.CheckedIn = true
+    body.CheckedInAt = new Date().toISOString()
+  }
+
+  const response = await fetch(NOCODB_BASE_URL, {
+    method: 'POST',
+    headers: nocoHeaders(),
+    body: JSON.stringify(body),
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(`NocoDB POST error ${response.status}: ${text}`)
+  }
+
+  const raw = (await response.json()) as Record<string, unknown>
+  return normaliseGuest(raw)
+}
+
+// ---------------------------------------------------------------------------
 // M-Pesa Payments — interface & NocoDB helpers
 // ---------------------------------------------------------------------------
 

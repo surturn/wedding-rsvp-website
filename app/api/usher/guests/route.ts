@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth } from '@/lib/auth'
-import { fetchGuests } from '@/lib/nocodb'
+import { fetchGuests, createGuest } from '@/lib/nocodb'
 
 export async function GET(request: NextRequest) {
   // Verify usher session
@@ -33,5 +33,42 @@ export async function GET(request: NextRequest) {
       { error: 'Failed to fetch guests' },
       { status: 500 }
     )
+  }
+}
+
+// ---------------------------------------------------------------------------
+// POST — add a walk-in / missing guest and check them in immediately.
+// Door fallback for anyone not in the system (deleted row, lost email, etc.).
+// ---------------------------------------------------------------------------
+
+export async function POST(request: NextRequest) {
+  const auth = await requireAuth(request, 'usher')
+  if (auth instanceof NextResponse) return auth
+
+  try {
+    const body = await request.json()
+
+    const name = typeof body.name === 'string' ? body.name.trim() : ''
+    if (!name) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 })
+    }
+
+    const parsedCount = Number(body.guestCount)
+    const guestCount =
+      Number.isFinite(parsedCount) && parsedCount > 0 ? Math.floor(parsedCount) : 1
+    const phone = typeof body.phone === 'string' ? body.phone.trim() : ''
+
+    const guest = await createGuest({
+      name,
+      phone,
+      guestCount,
+      attending: true,
+      checkedIn: true,
+    })
+
+    return NextResponse.json({ guest }, { status: 201 })
+  } catch (error) {
+    console.error('Error adding guest:', error)
+    return NextResponse.json({ error: 'Failed to add guest' }, { status: 500 })
   }
 }
