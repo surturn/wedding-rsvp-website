@@ -614,7 +614,7 @@ export default function AdminPage() {
                       <td className="px-4 py-4 text-center text-brown">
                         {guest.attending ? guest.guestCount : '—'}
                       </td>
-                      <td className="px-4 py-4 text-muted-foreground max-w-xs truncate">
+                      <td className="px-4 py-4 text-muted-foreground max-w-xs break-words whitespace-normal">
                         {guest.message || '—'}
                       </td>
                       <td className="px-4 py-4">
