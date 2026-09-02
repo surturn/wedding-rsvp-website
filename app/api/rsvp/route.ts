@@ -79,8 +79,12 @@ export async function POST(request: NextRequest) {
     // guest is already recorded and a retry would hit the duplicate check.
     let emailSent = false
     try {
-      const siteUrl =
-        process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
+      // Fail closed: never derive the QR URL from the incoming Host header,
+      // or a forged host could capture guest tokens via the email image src.
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+      if (!siteUrl) {
+        throw new Error('NEXT_PUBLIC_SITE_URL is not configured')
+      }
       const qrUrl = `${siteUrl}/api/qr/${token}`
 
       const htmlContent = attending
