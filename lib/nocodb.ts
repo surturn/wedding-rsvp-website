@@ -161,6 +161,8 @@ export async function createGuest(fields: {
   email?: string
   guestCount?: number
   attending?: boolean
+  message?: string
+  token?: string
   checkedIn?: boolean
 }): Promise<Guest> {
   const body: Record<string, unknown> = {
@@ -169,6 +171,16 @@ export async function createGuest(fields: {
     Email: fields.email ?? '',
     Attending: fields.attending ?? true,
     GuestCount: fields.guestCount ?? 1,
+  }
+
+  if (fields.message) {
+    body.Message = fields.message
+  }
+
+  // Token doubles as the QR payload — the usher scanner matches on it.
+  if (fields.token) {
+    body.Token = fields.token
+    body.QRCode = fields.token
   }
 
   if (fields.checkedIn) {
